@@ -1,7 +1,8 @@
-import NodeCache from "node-cache"
+// src/services/cacheService.ts
+import NodeCache from "node-cache";
 
 // Cache com TTL padrão de 5 minutos
-const cache = new NodeCache({ stdTTL: 300 })
+const cache = new NodeCache({ stdTTL: 300 });
 
 export const cacheService = {
   // Obter valor do cache
@@ -11,6 +12,9 @@ export const cacheService = {
 
   // Definir valor no cache
   set: <T>(key: string, value: T, ttl?: number): boolean => {
+    if (ttl === undefined) {
+      return cache.set(key, value);
+    }
     return cache.set(key, value, ttl);
   },
 
@@ -24,4 +28,3 @@ export const cacheService = {
     cache.flushAll();
   },
 };
-

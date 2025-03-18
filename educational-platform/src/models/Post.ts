@@ -1,14 +1,15 @@
-import mongoose, { type Document, Schema } from "mongoose"
-import type { IUser } from "./User"
+// src/models/Post.ts
+import mongoose, { type Document, Schema } from "mongoose";
+import type { IUser } from "./User";
 
 export interface IPost extends Document {
-  title: string
-  content: string
-  imageUrl?: string
-  author: IUser["_id"]
-  likes: IUser["_id"][]
-  createdAt: Date
-  updatedAt: Date
+  title: string;
+  content: string;
+  imageUrl?: string;
+  author: mongoose.Types.ObjectId | IUser;
+  likes: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const PostSchema = new Schema<IPost>(
@@ -41,12 +42,11 @@ const PostSchema = new Schema<IPost>(
   },
   {
     timestamps: true,
-  },
-)
+  }
+);
 
 // Índice para melhorar a performance das consultas
-PostSchema.index({ author: 1 })
-PostSchema.index({ createdAt: -1 })
+PostSchema.index({ author: 1 });
+PostSchema.index({ createdAt: -1 });
 
-export default mongoose.model<IPost>("Post", PostSchema)
-
+export default mongoose.model<IPost>("Post", PostSchema);

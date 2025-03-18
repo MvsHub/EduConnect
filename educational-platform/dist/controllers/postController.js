@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPostsByUser = exports.toggleLike = exports.deletePost = exports.updatePost = exports.createPost = exports.getPostById = exports.getAllPosts = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const Post_1 = __importDefault(require("../models/Post"));
 const Comment_1 = __importDefault(require("../models/Comment"));
 const appError_1 = require("../utils/appError");
@@ -162,14 +163,14 @@ const toggleLike = async (req, res, next) => {
             throw new appError_1.AppError("Post não encontrado", 404);
         }
         // Verificar se o usuário já curtiu o post
-        const isLiked = post.likes.includes(userId);
+        const isLiked = post.likes.some((id) => id.toString() === userId);
         if (isLiked) {
             // Remover curtida
             post.likes = post.likes.filter((id) => id.toString() !== userId);
         }
         else {
             // Adicionar curtida
-            post.likes.push(userId);
+            post.likes.push(new mongoose_1.default.Types.ObjectId(userId));
         }
         await post.save();
         await post.populate("author", "name email role profilePicture");

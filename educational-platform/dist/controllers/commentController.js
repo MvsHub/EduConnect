@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteComment = exports.createComment = exports.getCommentsByPost = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const Comment_1 = __importDefault(require("../models/Comment"));
 const Post_1 = __importDefault(require("../models/Post"));
 const appError_1 = require("../utils/appError");
@@ -53,8 +54,8 @@ const createComment = async (req, res, next) => {
         }
         const comment = await Comment_1.default.create({
             content,
-            author: userId,
-            post: postId,
+            author: new mongoose_1.default.Types.ObjectId(userId),
+            post: new mongoose_1.default.Types.ObjectId(postId),
         });
         await comment.populate("author", "name email role profilePicture");
         res.status(201).json({

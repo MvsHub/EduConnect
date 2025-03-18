@@ -1,13 +1,14 @@
-import mongoose, { type Document, Schema } from "mongoose"
-import type { IUser } from "./User"
-import type { IPost } from "./Post"
+// src/models/Comment.ts
+import mongoose, { type Document, Schema } from "mongoose";
+import type { IUser } from "./User";
+import type { IPost } from "./Post";
 
 export interface IComment extends Document {
-  content: string
-  author: IUser["_id"]
-  post: IPost["_id"]
-  createdAt: Date
-  updatedAt: Date
+  content: string;
+  author: mongoose.Types.ObjectId | IUser;
+  post: mongoose.Types.ObjectId | IPost;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const CommentSchema = new Schema<IComment>(
@@ -31,13 +32,12 @@ const CommentSchema = new Schema<IComment>(
   },
   {
     timestamps: true,
-  },
-)
+  }
+);
 
 // Índices para melhorar a performance das consultas
-CommentSchema.index({ post: 1 })
-CommentSchema.index({ author: 1 })
-CommentSchema.index({ createdAt: -1 })
+CommentSchema.index({ post: 1 });
+CommentSchema.index({ author: 1 });
+CommentSchema.index({ createdAt: -1 });
 
-export default mongoose.model<IComment>("Comment", CommentSchema)
-
+export default mongoose.model<IComment>("Comment", CommentSchema);

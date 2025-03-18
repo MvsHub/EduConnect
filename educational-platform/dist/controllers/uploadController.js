@@ -22,7 +22,7 @@ const uploadImage = async (req, res, next) => {
             success: true,
             data: {
                 url: blob.url,
-                size: blob.size,
+                size: file.size, // Use o tamanho do arquivo original
             },
         });
     }
