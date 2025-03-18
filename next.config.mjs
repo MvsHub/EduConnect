@@ -1,11 +1,8 @@
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
+  output: "standalone",
   images: {
-    domains: ['randomuser.me', 'miro.medium.com', 'vercel-blob.com'],
-  },
-  // Adicione esta configuração para resolver problemas de compatibilidade
-  experimental: {
-    esmExternals: 'loose',
+    domains: ["randomuser.me", "miro.medium.com", "vercel-blob.com"],
   },
 };
 

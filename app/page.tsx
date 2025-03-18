@@ -1,11 +1,8 @@
-import AuthGuard from "@/components/auth-guard"
-import FeedPage from "@/components/feed-page"
-
 export default function Home() {
   return (
-    <AuthGuard>
-      <FeedPage />
-    </AuthGuard>
+    <div className="flex min-h-screen flex-col items-center justify-center p-24">
+      <h1 className="text-4xl font-bold">Hello World</h1>
+      <p className="mt-4">This is a test page</p>
+    </div>
   )
 }
-
